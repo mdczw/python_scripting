@@ -3,8 +3,11 @@
 import os
 import sys
 
-try:
+input_file=''
+while input_file =='':
     input_file = input("Enter the file name\n")
+
+try:
     basename, extension = os.path.splitext(input_file)
     if not extension:
         raise ValueError("File has no extension.")

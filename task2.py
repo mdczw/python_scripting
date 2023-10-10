@@ -4,8 +4,10 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.surveymonkey.com")
 
-with open('qa_task2.json') as f:
-    payload = f.read()
+#with open('qa_task2.json') as f:
+#    payload = f.read()
+
+payload = "{\"title\":\"New Survey\",\"nickname\":\"My Survey\",\"language\":\"en\",\"buttons_text\":{\"next_button\":\"string\",\"prev_button\":\"string\",\"exit_button\":\"string\",\"done_button\":\"string\"},\"custom_variables\":{},\"footer\":true}"
 
 headers = {
     'Content-Type': "application/json",

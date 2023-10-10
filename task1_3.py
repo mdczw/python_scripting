@@ -7,10 +7,12 @@ dir_log = {}
 
 try:
     file = open(sys.argv[1])
+
 except IndexError as err:
     print(f"Error: {err}")
     print(f"Usage: {sys.argv[0]} [log_file]")
     sys.exit(1)
+
 except FileNotFoundError as err:
     print(f"Error: {err}")
     sys.exit(1)
