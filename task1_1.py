@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 
 try:
     input_file = input("Enter the file name\n")
@@ -11,3 +12,4 @@ try:
 
 except ValueError as e:
     print(f"Error: {e}")
+    sys.exit(1)
