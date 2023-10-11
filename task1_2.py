@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+#Script removes duplicates from the list and create a tuple. 
+#Finds the minimum and maximum number.
+
+
 from sys import exit
 
 #num_list = [-1, 1, -6, -6, 25, 100, 3, 6, 3, 5, 6, 1]
