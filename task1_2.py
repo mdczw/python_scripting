@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
-#Script removes duplicates from the list and create a tuple. 
-#Finds the minimum and maximum number.
+'''Script removes duplicates from the list and create a tuple.
+Finds the minimum and maximum number.'''
 
-
-from sys import exit
+import sys
 
 #num_list = [-1, 1, -6, -6, 25, 100, 3, 6, 3, 5, 6, 1]
 
@@ -18,7 +17,7 @@ try:
 except ValueError as err:
     print(f"Error {err}")
     print("Example list of numbers: -1, 1, -6, -6, 25, 100, 3, 6, 3, 5, 6, 1")
-    exit(1)
+    sys.exit(1)
 
 else:
     tuple_list = tuple(set(num_list))

@@ -6,17 +6,17 @@ import json
 
 
 def get_json_file():
-    input_file = '' 
+    input_file = ''
     while input_file == '':
         input_file = input("Enter a JSON file:\n")
     try:
-        f = open(input_file)
+        file = open(input_file)
     except FileNotFoundError as err:
         print(f"Error: {err}")
         sys.exit(1)
     else:
-        with f:
-            json_file = json.load(f)
+        with file:
+            json_file = json.load(file)
     return json_file
 
 
@@ -45,7 +45,6 @@ def create_survey_api(json_file):
                     question["answers"]["choices"].append(answer)
                 page["questions"].append(question)
             survey["pages"].append(page)
-    
     except:
         print("Enter a correct JSON file")
         print('Example:\n{ "Survey_Name": { "Page_Name": { "Question1": { "Description" : "Description of question 1", "Answers" : [ "Answer1", "Answer2", "Answer3" ] }, "Question2": { "Description" : "Description of question 2", "Answers" : [ "Answer1", "Answer2", "Answer3" ] }, "Question3": { "Description" : "Description of question 3", "Answers" : [ "Answer1", "Answer2", "Answer3" ] } } } }')
@@ -68,7 +67,6 @@ def surveymonkey_connaction(access_token, payload):
     print(data.decode("utf-8"))
 
 access_token = "EiwSAO2.L6DsGStNzQCccy9q7tCB4x22swJmYJQprzRghUnUGTVFX5CUCpv45Kvh1olFm08ZEMMpmrdfTqpDaAEUxfVs78YDOJfORSY-pS7TKpsE2npQU7tzhVACF.5Z"
-
 json_file = get_json_file()
 payload = create_survey_api(json_file)
 surveymonkey_connaction(access_token, payload)

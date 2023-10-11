@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-#script accepts the file name and puts its extension to output. 
-#If there is no extension - an exception should be raised.
+'''script accepts the file name and puts its extension to output.
+If there is no extension - an exception should be raised.'''
 
 
 import os

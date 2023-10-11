@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-#Script reads the access log from a file. 
-#The name of the file is provided as an argument. 
-#An output of the script provides the total number of different User Agents 
-#and then provides statistics with the number of requests from each of them.
+'''Script reads the access log from a file.
+The name of the file is provided as an argument.
+An output of the script provides the total number of different User Agents
+and then provides statistics with the number of requests from each of them.'''
 
 
 import sys
@@ -24,7 +24,7 @@ except FileNotFoundError as err:
     print(f"Error: {err}")
     sys.exit(1)
 
-else: 
+else:
     with file:
         for line in file.readlines():
             if "Mozilla" in line:
@@ -35,5 +35,4 @@ else:
                 dir_log[name] += 1
     print(f"The total number of different User Agents: {count_log}")
     for x in dir_log:
-        print (x,':', dir_log[x])
-
+        print (f"{x}: {dir_log[x]}")
