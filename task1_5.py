@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-import sys
 import psutil 
 import os
 import platform
-import socket
 import argparse
 
 
@@ -13,17 +11,10 @@ def distro_info():
 
 def memory_info():
     memory = psutil.virtual_memory()
-    return {
-        "total": memory.total,
-        "used": memory.used,
-        "free": memory.available,
-    }
-
+    return [memory.total, memory.used, memory.available]
+        
 def cpu_info():
-    cpu_info = {}
-    cpu_info["model"] = platform.processor()
-    cpu_info["core_count"] = psutil.cpu_count(logical=False)
-    cpu_info["speed"] = f"{psutil.cpu_freq().current:.2f} MHz"
+    cpu_info = [platform.processor(), psutil.cpu_count(), psutil.cpu_freq().current]
     return cpu_info
 
 def current_user():
@@ -31,55 +22,31 @@ def current_user():
 
 def load_average():
     load1, load5, load15 = os.getloadavg()
-    return {
-        "Load average over the last 1 minute": load1,
-        "Load average over the last 5 minute": load5,
-        "Load average over the last 10 minute": load10
-    }
+    return [load1, load5, load15]
 
 def ip_address():
-    return os.popen('ipconfig getifaddr en0').read()
+    return os.popen('ipconfig getifaddr en0').read().strip()
 
+parser = argparse.ArgumentParser(description='Get system information')
 
+parser.add_argument('-d', action='store_true', help='Get distro information')
+parser.add_argument('-m', action='store_true', help='Get memory information')
+parser.add_argument('-c', action='store_true', help='Get CPU information')
+parser.add_argument('-u', action='store_true', help='Get current user information')
+parser.add_argument('-l', action='store_true', help='Get system load average')
+parser.add_argument('-i', action='store_true', help='Get IP address')
 
-'''
-for argument in sys.argv[1:]:
-    if argument == "-d":
-        print("Distro info:")
-        print(platform.system())
-        print()
+args = parser.parse_args()
 
-    elif argument == "-m":
-        print("Memory info:")
-        print("total: {0} bytes, free: {1} bytes, used: {2} bytes".format(psutil.virtual_memory().total, psutil.virtual_memory().available, psutil.virtual_memory().used))
-        print()
-
-    elif argument == "-c":
-        print("CPU info:")
-        cpu_model = os.system('sysctl -a | grep machdep.cpu.brand_string')
-        print("Core Numbers: {0}, Current Frequency: {1}Mhz".format(psutil.cpu_count(), psutil.cpu_freq().current))
-        print()
-
-    elif argument == "-u":
-        print("Current user:")
-        print(os.getlogin())
-        print()
-
-    elif argument == "-l":
-        load1, load5, load15 = os.getloadavg()
-        print("Load average:")
-        print("Load average over the last 1 minute:", load1)
-        print("Load average over the last 5 minute:", load5)
-        print("Load average over the last 15 minute:", load15)
-        print()
-
-    elif argument == "-i":
-        print("IP address:")
-        print(os.popen('ipconfig getifaddr en0').read())
-
-    else:
-        print("Invalid parameter: " + str(argument))
-        print()
-
-'''
-   
+if args.d:
+    print(f"Distro: {distro_info()}")
+if args.m:
+    print(f"Memory:\nTotal: {memory_info()[0] / (1024 ** 3):.2f} Gb, Used: {memory_info()[1] / (1024 ** 3):.2f} Gb, Free: {memory_info()[2] / (1024 ** 3):.2f} Gb")
+if args.c:
+    print(f"CPU:\nModel: {cpu_info()[0]}, Core numbers: {cpu_info()[1]}, Speed: {cpu_info()[2]:.2f} MHz")
+if args.u:
+    print(f"Current user: {current_user()}")
+if args.l:
+    print(f"System load average:\nLoad average over the last 1 minute: {load_average()[0]:.4f},\nLoad average over the last 5 minute: {load_average()[1]:.4f},\nLoad average over the last 15 minute: {load_average()[2]:.4f}")
+if args.i:
+    print(f"IP address: {ip_address()}")
