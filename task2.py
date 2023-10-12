@@ -7,7 +7,8 @@ import json
 access_token = "cOmUpOXfevWx560egh1njpwsRLrkeBsT9ORXgYpvDYdo0u9okmRUiuCPnDSy6BUf3FzzwlfkY3cufVlOBKY-CmPcVt-3JINsJOZrAfHaNYtP1Hyg3gGuyR-.EEsYROJu"
 
 def get_json_file():
-    input_file = 'qa_task2.json'
+#   input_file = 'qa_task2.json'
+    input_file = ''
     while input_file == '':
         input_file = input("Enter a JSON file:\n")
     try:
