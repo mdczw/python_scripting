@@ -9,8 +9,8 @@ and then provides statistics with the number of requests from each of them.'''
 import sys
 import re
 
-dir_log = {}
-count_log = 0
+request_statistics = {}
+number_of_user_agents = 0
 
 try:
     file = open(sys.argv[1])
@@ -28,11 +28,12 @@ else:
     with file:
         for line in file.readlines():
             if "Mozilla" in line:
-                name = re.search(r'"(Mozilla.+)"$', line).group(1)
-                if name not in dir_log:
-                    dir_log[name] = 0
-                    count_log += 1
-                dir_log[name] += 1
-    print(f"The total number of different User Agents: {count_log}")
-    for x in dir_log:
-        print (f"{x}: {dir_log[x]}")
+                user_agent = re.search(r'"(Mozilla.+)"$', line).group(1)
+                if user_agent not in request_statistics:
+                    request_statistics[user_agent] = 0
+                    number_of_user_agents += 1
+                request_statistics[user_agent] += 1
+    print(f"Total number of different User Agents: {number_of_user_agents}")
+    print("Number of requests from each of the User Agent:")
+    for x in request_statistics:
+        print (f"{x}: {request_statistics[x]}")
