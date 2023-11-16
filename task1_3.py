@@ -10,10 +10,10 @@ import sys
 import re
 
 
-def open_file():
-    """Opens a file if it exists"""
+def get_file():
+    """Gets a file if it exists"""
     try:
-        file = open(sys.argv[1], encoding="utf-8")
+        file = sys.argv[1]
         return file
 
     except IndexError as err:
@@ -21,28 +21,28 @@ def open_file():
         print(f"Usage: {sys.argv[0]} [log_file]")
         sys.exit(1)
 
+
+def get_request_statistics(file):
+    """Returns a dictionary with the number of requests from each of the user agents"""
+    statistics = {}
+    try:
+        with open(file, encoding="utf-8") as f:
+            for line in f.readlines():
+                if "Mozilla" in line:
+                    user_agent = re.search(r'"(Mozilla.+)"$', line).group(1)
+                    if user_agent not in statistics:
+                        statistics[user_agent] = 0
+                    statistics[user_agent] += 1
+        return statistics
+
     except FileNotFoundError as err:
         print(f"Error: {err}")
         sys.exit(1)
 
 
-def get_request_statistics(file):
-    """Returns a dictionary with the number of requests from each of the user agents"""
-    statistics = {}
-
-    with file:
-        for line in file.readlines():
-            if "Mozilla" in line:
-                user_agent = re.search(r'"(Mozilla.+)"$', line).group(1)
-                if user_agent not in statistics:
-                    statistics[user_agent] = 0
-                statistics[user_agent] += 1
-    return statistics
-
-
 if __name__ == "__main__":
 
-    log_file = open_file()
+    log_file = get_file()
     request_statistics = get_request_statistics(log_file)
 
     print(f"Total number of different User Agents: {len(request_statistics)}")
